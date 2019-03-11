@@ -32,9 +32,15 @@ function invokeInputForm() {
     foodFormDiv.append("<input type='text' id='foodAndDrinks' placeholder='Eg Asian, American, French, Italian, Indian' class='form-control'>");
 
     // Input field for field of interest
-    var interestFormDiv = $("<div>").addClass("form-group");
-    interestFormDiv.append("<label for='fieldOfInterest'> Interest : </label>" );
-    interestFormDiv.append("<input type='text' id='fieldOfInterest' placeholder='Eg Industry, Travel, Movie , Sports, Science' class='form-control'>");
+    var moviesFormDiv = $("<div>").addClass("form-group");
+    moviesFormDiv.append("<label for='moviesUpdate'> Entertainment updates : </label>" );
+    moviesFormDiv.append("<input type='text' id='moviesUpdate' placeholder='Eg Name of Movie or TV Shows' class='form-control'>");
+
+      // Input field for field of interest
+      var newsFormDiv = $("<div>").addClass("form-group");
+      newsFormDiv.append("<label for='newsUpdate'> News updates : </label>" );
+      newsFormDiv.append("<input type='text' id='newsUpdate' placeholder='Eg Industry, Travel, Movie , Sports, Science' class='form-control'>");
+  
 
     inputForm.append(locationFormDiv,foodFormDiv,interestFormDiv);
    
