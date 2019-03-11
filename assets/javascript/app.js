@@ -11,6 +11,7 @@ var config = {
 firebase.initializeApp(config);
 
 var database = firebase.database();
+
 //   Namita
 //
 //
@@ -28,8 +29,9 @@ var database = firebase.database();
 //
 
 $(document).ready(function() {
+  
 function invokeInputForm() {
-
+  
     // Create the Form 
     var containerDiv = $("<div>").addClass("container float-left");
     var inputForm = $("<form>");
@@ -56,21 +58,41 @@ function invokeInputForm() {
 
     inputForm.append(locationFormDiv,foodFormDiv,moviesFormDiv,newsFormDiv);
    
-    var submitButton = $("<button>").addClass("btn btn-success m-3 float-right").attr("id", "btn-submit").text("Submit");
+    var submitButton = $("<button>").addClass("btn btn-success m-3 float-right").attr("id", "btn-submit").attr("type","submit").text("Submit");
     var clearButton =  $("<button>").addClass("btn btn-warning m-3 float-right").attr("id", "btn-clear").text("Clear");
     
     $("#input-form").append(inputForm, submitButton, clearButton);
     $(containerDiv).append("#input-form");
 
-    $(document).on("click","#btn-submit",saveToFirebase);
+    $(document).on("click", "button[type=submit]", function (event) {
+      event.preventDefault();
+      alert("pressed Submit");
+      saveToFirebase();
+    });
 }
  
   function saveToFirebase() {
+    // store the value entered in form into variables
+     var location = $("#location").val().trim();
+     var foodAndDrinks = $("#foodAndDrinks").val().trim();
+     var moviesUpdate = $("#moviesUpdate").val().trim();
+     var newsUpdate = $("#newsUpdate").val().trim();
 
+      var newSearchStored={
+           location: location,
+           foodAndDrinks: foodAndDrinks,
+           moviesUpdate: moviesUpdate,
+           newsUpdate: newsUpdate
+      };
+
+      database.ref().push(newSearchStored);
 
   }
 
-$(document).on("click",".fas", invokeInputForm);
+$(".fas").on("click", function(event) {
+    event.preventDefault();
+    invokeInputForm();
+});
 
 
 })
