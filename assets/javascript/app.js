@@ -1,4 +1,16 @@
+// Firebase Configuration & initialization
 //
+var config = {
+  apiKey: "AIzaSyAetjyRx2t2a0mBfY0XwsSpH-2RclTWfeI",
+  authDomain: "flawless-7a98a.firebaseapp.com",
+  databaseURL: "https://flawless-7a98a.firebaseio.com",
+  projectId: "flawless-7a98a",
+  storageBucket: "flawless-7a98a.appspot.com",
+  messagingSenderId: "1096240112468"
+};
+firebase.initializeApp(config);
+
+var database = firebase.database();
 //   Namita
 //
 //
@@ -15,11 +27,11 @@
 //
 //
 
-
+$(document).ready(function() {
 function invokeInputForm() {
 
     // Create the Form 
-    var containerDiv = $("<div>").addClass("container");
+    var containerDiv = $("<div>").addClass("container float-left");
     var inputForm = $("<form>");
     // Input field for Search location by Zipcode or City
     var locationFormDiv = $("<div>").addClass("form-group");
@@ -42,7 +54,7 @@ function invokeInputForm() {
       newsFormDiv.append("<input type='text' id='newsUpdate' placeholder='Eg Industry, Travel, Movie , Sports, Science' class='form-control'>");
   
 
-    inputForm.append(locationFormDiv,foodFormDiv,interestFormDiv);
+    inputForm.append(locationFormDiv,foodFormDiv,moviesFormDiv,newsFormDiv);
    
     var submitButton = $("<button>").addClass("btn btn-success m-3 float-right").attr("id", "btn-submit").text("Submit");
     var clearButton =  $("<button>").addClass("btn btn-warning m-3 float-right").attr("id", "btn-clear").text("Clear");
@@ -50,8 +62,15 @@ function invokeInputForm() {
     $("#input-form").append(inputForm, submitButton, clearButton);
     $(containerDiv).append("#input-form");
 
+    $(document).on("click","#btn-submit",saveToFirebase);
 }
+ 
+  function saveToFirebase() {
 
-invokeInputForm();
 
-//$(document).on("click",".icon", invokeInputForm);
+  }
+
+$(document).on("click",".fas", invokeInputForm);
+
+
+})
