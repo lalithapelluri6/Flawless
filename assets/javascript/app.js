@@ -127,7 +127,7 @@ $(document).ready(function () {
     });
 
     //Geenrating the API query by passing the location to it 
-    var queryURL = "https://api.yelp.com/v3/businesses/search?term=resturants&limit=50&sort_by=rating&location=" +  place; 
+    var queryURL = "https://api.yelp.com/v3/businesses/search?term=resturants&limit=20&sort_by=rating&location=" +  place; 
 
     //YELP API we need to pass Authorization as a part of the header for the link to work 
     $.ajax({
@@ -139,15 +139,20 @@ $(document).ready(function () {
         }
     }).then(function(response) {
         // console.log("queryURL" + queryURL); 
-        // console.log(response);
+        console.log(response);
 
         for ( var i =0; i < response.businesses.length ; i++){
           var newDiv = $("<div>"); 
-          console.log("State: " + response.businesses[i].location.state); 
-          console.log("Category :" + response.businesses[i].categories[0].alias); 
-          console.log("Name : "  + response.businesses[i].name); 
+          // console.log("State: " + response.businesses[i].location.state); 
+          // console.log("Category :" + response.businesses[i].categories[0].title); 
+          // console.log("Name : "  + response.businesses[i].name); 
 
           newDiv.append("<h3 class='title'>"+ response.businesses[i].name + "</h3>"); 
+          newDiv.append("<p> Category : "+ response.businesses[i].categories[0].title + "</p>"); 
+          
+          newDiv.append("<p> Price : "+ response.businesses[i].price  + " Reviews: " + response.businesses[i].review_count + "</p>");
+          newDiv.append("<p>  Ratings: " + response.businesses[i].rating +"</p>"); 
+          newDiv.append("<a href="+ response.businesses[i].url + " target='_blank'> Yelp Business Link </a>")
           
           newDiv.append("<hr />"); 
           newDiv.append("</div>"); 
