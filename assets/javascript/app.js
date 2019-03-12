@@ -95,8 +95,16 @@ $(document).ready(function () {
     invokeInputForm();
   });
 
-  // when the submit has been clicked...
-  $(document).on("click", "button[type=submit]", function (event) {
+  // when the "clear" button has been clicked..
+  $(document).on("click", "#btn-clear", function() {
+    $("#location").val("");
+    $("#foodAndDrinks").val("");
+    $("#moviesUpdate").val("");
+    $("#newsUpdate").val("")
+  })
+
+  // when the "submit" button has been clicked...
+  $(document).on("click", "#btn-submit", function (event) {
     event.preventDefault();
 
     // save the user input to firebase 
