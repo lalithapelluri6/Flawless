@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-us">
 <head>
     <meta charset="UTF-8">
     <title>Flawless</title>
@@ -11,7 +11,7 @@
 </head>
 <body>
 <div class="container">
-    <nav class="navbar navbar-light bg-light">
+    <nav class="navbar navbar-light bg-info">
         <a class="navbar-brand">Logo</a>
         <h1 id="heading-one">Flawless</h1>
         <ul class="navbar-nav">
@@ -20,39 +20,57 @@
             </li>
         </ul>
     </nav>
-    <div class="bg-info">
-        <div class="container">
-            <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
-        </div>
-    </div>
-    <!--Side nav-->
-    <div class="aside ml-5">
-          <div id="business">
-            <i class="fas fa-user-tie"></i><span class="text-business">Business</span>
-          </div>
-          <div id="social">
-              <i class="fas fa-glass-cheers"></i><span class="text-social">Social</span>
-          </div>
-        <div id="date">
-            <i class="fas fa-heart"></i><span class="text-date">Date</span>
-        </div>
-    </div>
-    <!--Hidden section tag goes here-->
-    <section id="input-form">
+    <div>
+        <div class="container info">
+            <p class="lead"> We think that the main fear about meeting new people is this uncomfortable and stressing silence/blank
+                because one doesn’t know what to talk about or what to say to keep the conversation going.Our app aims addresses the
+                problem by helping people get ready for their date, professional, and/or social outings!</p>
 
-    </section>
-    <!--jumbotron-Footer-->
-    <div class="footer">
+            <!--Side nav-->
+            <div class="information">
+                <div class="aside ml-5">
+                    <div id="business">
+                        <i class="fas fa-user-tie"></i><span class="text-business">Business</span>
+                    </div>
+                    <div id="social">
+                        <i class="fas fa-glass-cheers"></i><span class="text-social">Social</span>
+                    </div>
+                    <div id="date">
+                        <i class="fas fa-heart pb-5"></i><span class="text-date pb-5">Date</span>
+                    </div>
+                </div>
+            </div>
+            <!--Hidden section tag goes here-->
+            <div id="input-form" class="float-top w-60">
+
+            </div>
+        </div>
+        <section></section>
+    </div>
+    <!--container-Footer-->
+    <div class="footer bg-info">
         <div class="container">
-            <p class="lead">Copyright.</p>
+            <p class="copyright">Copyright.</p>
         </div>
     </div>
 </div>
 
-
-</body>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<!-- link to Firebase -->
+<script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js"></script>
+<!-- link to Bootstrap JavaScript/jQuery -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+<!-- link to our JavaScript/jQuery -->
 <script src="assets/javascript/app.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</body>
+
+
 </html>
