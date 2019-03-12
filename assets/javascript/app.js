@@ -14,10 +14,10 @@ var config = {
 firebase.initializeApp(config);
 
 // ------------------------------------------------------
-// Variables (if needed)
+// Global Variables
 //----------------------------------------------------------
 
-  var database = firebase.database();
+var database = firebase.database();
 
 
 // ------------------------------------------------------
@@ -25,6 +25,8 @@ firebase.initializeApp(config);
 //--------------------------------------------------------
 // function to display the input form
 function invokeInputForm() {
+  // clear the div from previous info
+  $("#input-form").empty();
 
   // Create the Form within a container
   var containerDiv = $("<div>").addClass("container float-left");
@@ -86,6 +88,57 @@ function saveToFirebase() {
 
 }
 
+// function to call the YELP Fusion API
+function yelpFusionAPI(place, foodDrinks) {
+
+  // Some APIs will give us a cross-origin (CORS) error. This small function is a fix for that error. You can also check out the chrome extenstion (https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi?hl=en).
+  jQuery.ajaxPrefilter(function (options) {
+    if (options.crossDomain && jQuery.support.cors) {
+      options.url = 'https://cors-anywhere.herokuapp.com/' + options.url;
+    }
+  });
+
+  // Generating the API query url with by passing the location to it & the term here works in for categories the we like to search Ex: Cuisine or Bars 
+  var queryURL = "https://api.yelp.com/v3/businesses/search?term="+ foodDrinks + "&limit=20&sort_by=rating&location=" +  place  
+
+  //YELP API we need to pass Authorization as a part of the header for the link to work 
+  //This api key is generated for the industry specifically catering to Food& Drinks from the Yelp Fushion  
+  $.ajax({
+      url: queryURL,
+      method: "GET",
+      dataType: "json",
+      headers: {
+          Authorization: "Bearer 6pKp-wZ6h5uoiUqasnagzsVJuleZkEyFSWPJhzSyyiSj8Ha__4PCt_15sDAEufe1_7x0-aCz_tfxz96hkRdPxL6GtP5QyOzJ9A1yOlRiVSORiFstD9P1MT0J6m6EXHYx",
+      }
+  }).then(function(response) {
+      console.log("queryURL" + queryURL); 
+      console.log(response);
+
+      for ( var i =0; i < response.businesses.length ; i++){
+        var newDiv = $("<div>"); 
+        console.log("State: " + response.businesses[i].location.state); 
+        console.log("Category :" + response.businesses[i].categories[0].title); 
+        console.log("Name : "  + response.businesses[i].name); 
+
+        newDiv.append("<h3 class='title'>"+ response.businesses[i].name + "</h3>"); 
+        newDiv.append("<p> Category : "+ response.businesses[i].categories[0].title + "</p>"); 
+        
+        newDiv.append("<p> Price : "+ response.businesses[i].price  + " Reviews: " + response.businesses[i].review_count + "</p>");
+        newDiv.append("<p>  Ratings: " + response.businesses[i].rating +"</p>"); 
+        newDiv.append("<a href="+ response.businesses[i].url + " target='_blank'> Yelp Business Link </a>")
+        
+        newDiv.append("<hr />"); 
+        newDiv.append("</div>"); 
+        
+        // By now, you should have been able to render all of the resturants to the foods & drinks div.
+        $("#appendHere").append(newDiv); 
+      }
+  });
+}
+
+
+
+
 // ------------------------------------------------------------
 // Main process
 
@@ -105,10 +158,8 @@ $(document).ready(function () {
   })
 
   // when the "submit" button has been clicked...
-  
   $(document).on("click", "button[type=submit]", function (event) {
-
-
+    // prevent to the page to refresh
     event.preventDefault();
 
     // save the user input to firebase 
@@ -117,53 +168,7 @@ $(document).ready(function () {
     // do the AJAX calls
     var place = $("#location").val().trim(); 
     var foodDrinks = $("#foodAndDrinks").val().trim(); 
-    
-
-     // Some APIs will give us a cross-origin (CORS) error. This small function is a fix for that error. You can also check out the chrome extenstion (https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi?hl=en).
-     jQuery.ajaxPrefilter(function (options) {
-      if (options.crossDomain && jQuery.support.cors) {
-        options.url = 'https://cors-anywhere.herokuapp.com/' + options.url;
-      }
-    });
-
-    //Generating the API query by passing the location to it & the term here works in for categories the we like to search Ex: Cuisine or Bars 
-    var queryURL = "https://api.yelp.com/v3/businesses/search?term="+ foodDrinks + "&limit=20&sort_by=rating&location=" +  place  
-
-    //YELP API we need to pass Authorization as a part of the header for the link to work 
-    //This api key is generated for the industry specifically catering to Food& Drinks from the Yelp Fushion  
-    $.ajax({
-        url: queryURL,
-        method: "GET",
-        dataType: "json",
-        headers: {
-            Authorization: "Bearer 6pKp-wZ6h5uoiUqasnagzsVJuleZkEyFSWPJhzSyyiSj8Ha__4PCt_15sDAEufe1_7x0-aCz_tfxz96hkRdPxL6GtP5QyOzJ9A1yOlRiVSORiFstD9P1MT0J6m6EXHYx",
-        }
-    }).then(function(response) {
-        console.log("queryURL" + queryURL); 
-        console.log(response);
-
-        for ( var i =0; i < response.businesses.length ; i++){
-          var newDiv = $("<div>"); 
-          // console.log("State: " + response.businesses[i].location.state); 
-          // console.log("Category :" + response.businesses[i].categories[0].title); 
-          // console.log("Name : "  + response.businesses[i].name); 
-
-          newDiv.append("<h3 class='title'>"+ response.businesses[i].name + "</h3>"); 
-          newDiv.append("<p> Category : "+ response.businesses[i].categories[0].title + "</p>"); 
-          
-          newDiv.append("<p> Price : "+ response.businesses[i].price  + " Reviews: " + response.businesses[i].review_count + "</p>");
-          newDiv.append("<p>  Ratings: " + response.businesses[i].rating +"</p>"); 
-          newDiv.append("<a href="+ response.businesses[i].url + " target='_blank'> Yelp Business Link </a>")
-          
-          newDiv.append("<hr />"); 
-          newDiv.append("</div>"); 
-          
-          // By now, you should have been able to render all of the resturants to the foods & drinks div.
-          $("#appendHere").append(newDiv); 
-        }
-    });
-
-
+    yelpFusionAPI(place, foodDrinks);
 
   });
 
