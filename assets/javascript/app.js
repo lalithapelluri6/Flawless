@@ -116,7 +116,7 @@ $(document).ready(function () {
 
     // do the AJAX calls
     var place = $("#location").val().trim(); 
-    var cuisine = $("#foodAndDrinks").val().trim(); 
+    var foodDrinks = $("#foodAndDrinks").val().trim(); 
     
 
      // Some APIs will give us a cross-origin (CORS) error. This small function is a fix for that error. You can also check out the chrome extenstion (https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi?hl=en).
@@ -126,10 +126,11 @@ $(document).ready(function () {
       }
     });
 
-    //Geenrating the API query by passing the location to it 
-    var queryURL = "https://api.yelp.com/v3/businesses/search?term=resturants&limit=20&sort_by=rating&location=" +  place; 
+    //Generating the API query by passing the location to it & the term here works in for categories the we like to search Ex: Cuisine or Bars 
+    var queryURL = "https://api.yelp.com/v3/businesses/search?term="+ foodDrinks + "&limit=20&sort_by=rating&location=" +  place  
 
     //YELP API we need to pass Authorization as a part of the header for the link to work 
+    //This api key is generated for the industry specifically catering to Food& Drinks from the Yelp Fushion  
     $.ajax({
         url: queryURL,
         method: "GET",
@@ -138,7 +139,7 @@ $(document).ready(function () {
             Authorization: "Bearer 6pKp-wZ6h5uoiUqasnagzsVJuleZkEyFSWPJhzSyyiSj8Ha__4PCt_15sDAEufe1_7x0-aCz_tfxz96hkRdPxL6GtP5QyOzJ9A1yOlRiVSORiFstD9P1MT0J6m6EXHYx",
         }
     }).then(function(response) {
-        // console.log("queryURL" + queryURL); 
+        console.log("queryURL" + queryURL); 
         console.log(response);
 
         for ( var i =0; i < response.businesses.length ; i++){
