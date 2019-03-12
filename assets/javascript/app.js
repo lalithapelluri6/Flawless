@@ -62,10 +62,12 @@ function invokeInputForm() {
   containerDiv.append(inputForm, submitButton, clearButton);
   // append the input fields and button to the HTML section with ID = input-form
   $("#input-form").append(containerDiv); 
+  
 }
 
-// function to save into the firebase the user input
+// function to save the user input into the firebase
 function saveToFirebase() {
+
   // store the value entered in form into variables
   var location = $("#location").val().trim();
   var foodAndDrinks = $("#foodAndDrinks").val().trim();
