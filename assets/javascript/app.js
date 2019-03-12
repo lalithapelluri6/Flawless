@@ -91,6 +91,9 @@ function saveToFirebase() {
 // function to call the YELP Fusion API
 function yelpFusionAPI(place, foodDrinks) {
 
+  //Clear Results Div  before showing the data 
+  $("#appendHere").empty(); 
+
   // Some APIs will give us a cross-origin (CORS) error. This small function is a fix for that error. You can also check out the chrome extenstion (https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi?hl=en).
   jQuery.ajaxPrefilter(function (options) {
     if (options.crossDomain && jQuery.support.cors) {
@@ -116,9 +119,9 @@ function yelpFusionAPI(place, foodDrinks) {
 
       for ( var i =0; i < response.businesses.length ; i++){
         var newDiv = $("<div>"); 
-        console.log("State: " + response.businesses[i].location.state); 
-        console.log("Category :" + response.businesses[i].categories[0].title); 
-        console.log("Name : "  + response.businesses[i].name); 
+        // console.log("State: " + response.businesses[i].location.state); 
+        // console.log("Category :" + response.businesses[i].categories[0].title); 
+        // console.log("Name : "  + response.businesses[i].name); 
 
         newDiv.append("<h3 class='title'>"+ response.businesses[i].name + "</h3>"); 
         newDiv.append("<p> Category : "+ response.businesses[i].categories[0].title + "</p>"); 
@@ -136,7 +139,103 @@ function yelpFusionAPI(place, foodDrinks) {
   });
 }
 
+// function to call the News API depending on the category selected 
+function NewsAPI(newsText) {
 
+  //Clear Results Div  before showing the data 
+  $("#appendHere").empty(); 
+
+  // Some APIs will give us a cross-origin (CORS) error. This small function is a fix for that error. You can also check out the chrome extenstion (https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi?hl=en).
+  jQuery.ajaxPrefilter(function (options) {
+    if (options.crossDomain && jQuery.support.cors) {
+      options.url = 'https://cors-anywhere.herokuapp.com/' + options.url;
+    }
+  });
+
+  // Generating the API query url with by passing the location to it 
+  var queryURL = "https://newsapi.org/v2/everything?q="+ newsText.split(' ').join('%20') +"&language=en&sortBy=relevancy&apiKey=80f6aa8df95a4c7ba514557d4f8f57fe" ; 
+
+  $.ajax({
+    url: queryURL, 
+    method: "GET"
+  }).then(function (response) {
+    
+      console.log(queryURL); 
+
+    console.log(response); 
+
+    for ( var i =0; i < response.articles.length ; i++){
+      var newDiv = $("<div>"); 
+      console.log(response.articles[i].name); 
+
+      newDiv.append("<h3 class='title'>"+ response.articles[i].title+ "</h3>"); 
+      newDiv.append("<p class='author'> Author : "+ response.articles[i].author+ "</p>");
+      newDiv.append("<p class='desc'> Content : "+ response.articles[i].content+ "</p>");
+      newDiv.append("<p class='desc'> Source : "+ response.articles[i].source.name+ "</p>");
+      newDiv.append("<a href=" + response.articles[i].url+ " target='_blank' > Article Link </a>");
+      newDiv.append("<hr />"); 
+      newDiv.append("</div>"); 
+        
+      
+        // Step 6. By now, you should have been able to render all of the articles to the news div.
+        $("#appendHere").append(newDiv); 
+    }
+    
+  });
+  
+}
+
+// function to call the Movie and  TV shows API depending on the category selected 
+function movieTvShowsAPI(movieOrTVShow) {
+
+  //Clear Results Div  before showing the data 
+  $("#appendHere").empty(); 
+
+  // Some APIs will give us a cross-origin (CORS) error. This small function is a fix for that error. You can also check out the chrome extenstion (https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi?hl=en).
+  jQuery.ajaxPrefilter(function (options) {
+    if (options.crossDomain && jQuery.support.cors) {
+      options.url = 'https://cors-anywhere.herokuapp.com/' + options.url;
+    }
+  });
+
+  // Generating the API query url with by passing the location to it 
+
+  var  queryURL = "https://api.themoviedb.org/3/search/multi?api_key=498b69881c75c1037a70315572cae878&language=en-US&query="+ movieOrTVShow + "&page=1&include_adult=false"; 
+  $.ajax({
+    url: queryURL, 
+    method: "GET"
+  }).then(function (response) {
+    
+      console.log(queryURL); 
+
+    console.log(response); 
+
+    for ( var i =0; i < response.results.length ; i++){
+      var newDiv = $("<div>"); 
+
+      if (response.results[i].media_type === "tv") {
+        newDiv.append("<h3 class='title'> Title : "+ response.results[i].name+ "</h3>");
+      }
+      else { 
+        newDiv.append("<h3 class='title'> Title : "+ response.results[i].title+ "</h3>");
+      }
+
+      newDiv.append("<p class='author'> Media Type : "+ response.results[i].media_type+ "</p>");
+      newDiv.append("<p class='desc'> Popularity : "+ response.results[i].popularity+ "</p>");
+      var posterImg = $("<img alt= 'Poster Image' class='img-fluid img-thumbnail'>").attr("src", "http://image.tmdb.org/t/p/w185/" + response.results[i].poster_path); 
+      newDiv.append(posterImg); 
+      newDiv.append("<br/> <p class='desc'> Overview : " + response.results[i].overview + "</p>");
+      newDiv.append("<hr />"); 
+      newDiv.append("</div>"); 
+        
+      
+        // Step 6. By now, you should have been able to render all of the articles to the news div.
+        $("#appendHere").append(newDiv); 
+    }
+    
+  });
+  
+}
 
 
 // ------------------------------------------------------------
@@ -155,6 +254,8 @@ $(document).ready(function () {
     $("#foodAndDrinks").val("");
     $("#moviesUpdate").val("");
     $("#newsUpdate").val("")
+    //Clear Results Div  before showing the data 
+    $("#appendHere").empty(); 
   })
 
   // when the "submit" button has been clicked...
@@ -168,8 +269,37 @@ $(document).ready(function () {
     // do the AJAX calls
     var place = $("#location").val().trim(); 
     var foodDrinks = $("#foodAndDrinks").val().trim(); 
-    yelpFusionAPI(place, foodDrinks);
+    var movieOrTVShow = $("#moviesUpdate").val().trim(); 
+    var newsText = $("#newsUpdate").val().trim(); 
 
+    //Nested Conditions to display API data based on the user input combinations 
+    if (place) {
+      //Show Food & drink recommendations 
+      yelpFusionAPI(place, foodDrinks);
+      if (movieOrTVShow) {
+        //Display data related to user input for TV /Movie / People
+        movieTvShowsAPI(movieOrTVShow);
+
+        if (newsText) {
+          //Display NEWS related to user input for language - en-US 
+          NewsAPI(newsText);
+        }
+      }
+    }
+    else if (movieOrTVShow) {
+      //Display data related to user input for TV /Movie / People
+      movieTvShowsAPI(movieOrTVShow);
+
+      if (newsText) {
+        //Display NEWS related to user input for language - en-US 
+        NewsAPI(newsText);
+      }
+    }
+    else if (newsText) {
+      //Display NEWS related to user input for language - en-US 
+      NewsAPI(newsText);
+    }
+  
   });
 
-})
+});
