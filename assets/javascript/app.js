@@ -98,10 +98,10 @@ $(document).ready(function () {
   // when the "clear" button has been clicked..
   $(document).on("click", "#btn-clear", function() {
 
-    location = $("#location").val("");
-    foodAndDrinks = $("#foodAndDrinks").val("");
-    moviesUpdate = $("#moviesUpdate").val("");
-    newsUpdate =  $("#newsUpdate").val("")
+    $("#location").val("");
+    $("#foodAndDrinks").val("");
+    $("#moviesUpdate").val("");
+    $("#newsUpdate").val("")
   })
 
   // when the "submit" button has been clicked...
