@@ -13,10 +13,12 @@ firebase.initializeApp(config);
 
 var database = firebase.database();
 
+
 // ------------------------------------------------------
 // Variables (if needed)
 //
 //
+
 
 
 // ------------------------------------------------------
@@ -70,6 +72,7 @@ function saveToFirebase() {
   var moviesUpdate = $("#moviesUpdate").val().trim();
   var newsUpdate = $("#newsUpdate").val().trim();
 
+  // create a temporary object 
   var newSearchStored = {
     location: location,
     foodAndDrinks: foodAndDrinks,
@@ -77,6 +80,7 @@ function saveToFirebase() {
     newsUpdate: newsUpdate
   };
 
+  // push this temporary object into firebase for storage
   database.ref().push(newSearchStored);
 
 }
@@ -90,10 +94,7 @@ function saveToFirebase() {
 $(document).ready(function () {
 
   // display the input form when an icon has been cliked
-  $(".fas").on("click", function (event) {
-    event.preventDefault();
-    invokeInputForm();
-  });
+  $(".btn-to-get-form").on("click", invokeInputForm);
 
   // when the "clear" button has been clicked..
   $(document).on("click", "#btn-clear", function() {
