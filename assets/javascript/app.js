@@ -1,6 +1,7 @@
 // -------------------------------------------------------
 // Firebase Configuration & initialization
-//
+//--------------------------------------------------------
+
 var config = {
   apiKey: "AIzaSyAetjyRx2t2a0mBfY0XwsSpH-2RclTWfeI",
   authDomain: "flawless-7a98a.firebaseapp.com",
@@ -9,24 +10,19 @@ var config = {
   storageBucket: "flawless-7a98a.appspot.com",
   messagingSenderId: "1096240112468"
 };
+
 firebase.initializeApp(config);
-
-var database = firebase.database();
-
 
 // ------------------------------------------------------
 // Variables (if needed)
+//----------------------------------------------------------
 
-  var location ;
-  var foodAndDrinks;
-  var moviesUpdate ;
-  var newsUpdate; 
-
+  var database = firebase.database();
 
 
 // ------------------------------------------------------
 // Functions
-//
+//--------------------------------------------------------
 // function to display the input form
 function invokeInputForm() {
 
@@ -72,10 +68,10 @@ function invokeInputForm() {
 function saveToFirebase() {
 
   // store the value entered in form into variables
-  location = $("#location").val().trim();
-  foodAndDrinks = $("#foodAndDrinks").val().trim();
-  moviesUpdate = $("#moviesUpdate").val().trim();
-  newsUpdate = $("#newsUpdate").val().trim();
+  var location = $("#location").val().trim();
+  var foodAndDrinks = $("#foodAndDrinks").val().trim();
+  var moviesUpdate = $("#moviesUpdate").val().trim();
+  var newsUpdate = $("#newsUpdate").val().trim();
 
   // create a temporary object 
   var newSearchStored = {
@@ -89,8 +85,6 @@ function saveToFirebase() {
   database.ref().push(newSearchStored);
 
 }
-
-
 
 // ------------------------------------------------------------
 // Main process
@@ -111,13 +105,59 @@ $(document).ready(function () {
   })
 
   // when the "submit" button has been clicked...
-  $(document).on("click", "#btn-submit", function (event) {
+  
+  $(document).on("click", "button[type=submit]", function (event) {
+
+
     event.preventDefault();
 
     // save the user input to firebase 
     saveToFirebase();
 
     // do the AJAX calls
+    var place = $("#location").val().trim(); 
+    var cuisine = $("#foodAndDrinks").val().trim(); 
+    
+
+     // Some APIs will give us a cross-origin (CORS) error. This small function is a fix for that error. You can also check out the chrome extenstion (https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi?hl=en).
+     jQuery.ajaxPrefilter(function (options) {
+      if (options.crossDomain && jQuery.support.cors) {
+        options.url = 'https://cors-anywhere.herokuapp.com/' + options.url;
+      }
+    });
+
+    //Geenrating the API query by passing the location to it 
+    var queryURL = "https://api.yelp.com/v3/businesses/search?term=resturants&limit=50&sort_by=rating&location=" +  place; 
+
+    //YELP API we need to pass Authorization as a part of the header for the link to work 
+    $.ajax({
+        url: queryURL,
+        method: "GET",
+        dataType: "json",
+        headers: {
+            Authorization: "Bearer 6pKp-wZ6h5uoiUqasnagzsVJuleZkEyFSWPJhzSyyiSj8Ha__4PCt_15sDAEufe1_7x0-aCz_tfxz96hkRdPxL6GtP5QyOzJ9A1yOlRiVSORiFstD9P1MT0J6m6EXHYx",
+        }
+    }).then(function(response) {
+        // console.log("queryURL" + queryURL); 
+        // console.log(response);
+
+        for ( var i =0; i < response.businesses.length ; i++){
+          var newDiv = $("<div>"); 
+          console.log("State: " + response.businesses[i].location.state); 
+          console.log("Category :" + response.businesses[i].categories[0].alias); 
+          console.log("Name : "  + response.businesses[i].name); 
+
+          newDiv.append("<h3 class='title'>"+ response.businesses[i].name + "</h3>"); 
+          
+          newDiv.append("<hr />"); 
+          newDiv.append("</div>"); 
+          
+          // By now, you should have been able to render all of the resturants to the foods & drinks div.
+          $("#appendHere").append(newDiv); 
+        }
+    });
+
+
 
   });
 
