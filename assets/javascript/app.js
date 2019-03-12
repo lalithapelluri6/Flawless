@@ -17,11 +17,10 @@ var database = firebase.database();
 // ------------------------------------------------------
 // Variables (if needed)
 
-var location = "";
-var foodAndDrinks = "";
-var moviesUpdate = "";
-var newsUpdate = "";
-
+  var location ;
+  var foodAndDrinks;
+  var moviesUpdate ;
+  var newsUpdate; 
 
 
 
@@ -104,10 +103,11 @@ $(document).ready(function () {
 
   // when the "clear" button has been clicked..
   $(document).on("click", "#btn-clear", function() {
-    $("#location").val("");
-    $("#foodAndDrinks").val("");
-    $("#moviesUpdate").val("");
-    $("#newsUpdate").val("")
+
+    location = $("#location").val("");
+    foodAndDrinks = $("#foodAndDrinks").val("");
+    moviesUpdate = $("#moviesUpdate").val("");
+    newsUpdate =  $("#newsUpdate").val("")
   })
 
   // when the "submit" button has been clicked...
