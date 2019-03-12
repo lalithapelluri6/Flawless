@@ -16,8 +16,12 @@ var database = firebase.database();
 
 // ------------------------------------------------------
 // Variables (if needed)
-//
-//
+
+var location = "";
+var foodAndDrinks = "";
+var moviesUpdate = "";
+var newsUpdate = "";
+
 
 
 
@@ -62,17 +66,17 @@ function invokeInputForm() {
   containerDiv.append(inputForm, submitButton, clearButton);
   // append the input fields and button to the HTML section with ID = input-form
   $("#input-form").append(containerDiv); 
-  
+
 }
 
 // function to save the user input into the firebase
 function saveToFirebase() {
 
   // store the value entered in form into variables
-  var location = $("#location").val().trim();
-  var foodAndDrinks = $("#foodAndDrinks").val().trim();
-  var moviesUpdate = $("#moviesUpdate").val().trim();
-  var newsUpdate = $("#newsUpdate").val().trim();
+  location = $("#location").val().trim();
+  foodAndDrinks = $("#foodAndDrinks").val().trim();
+  moviesUpdate = $("#moviesUpdate").val().trim();
+  newsUpdate = $("#newsUpdate").val().trim();
 
   // create a temporary object 
   var newSearchStored = {
