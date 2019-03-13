@@ -1,30 +1,41 @@
 <!DOCTYPE html>
 <html lang="en-us">
+
 <head>
     <meta charset="UTF-8">
     <title>Flawless</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+        integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Exo" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Bangers|Cardo|Courgette|Domine|Hammersmith+One|Kalam|Neuton|Paytone+One|Quattrocento|Satisfy|Suranna"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome Icon Library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
-<body>
-<div class="container">
-    <nav class="navbar navbar-light bg-info">
-        <a class="navbar-brand">Home</a>
-        <img src="assets/Images/logo.png" class="center" height=90px width=150px>
-        <a class="navbar-brand">Stats</a>
-    </nav>
 
-        <div class="container info" id="main-page">
-            <p class="lead pt-3 pb-4"> We think that the main fear about meeting new people is this uncomfortable and stressing silence/blank
-                because one doesn’t know what to talk about or what to say to keep the conversation going.Our app aims addresses the
-                problem by helping people get ready for their date, professional, and/or social outings!</p>
+<body>
+    <div class="container-fluid">
+        <nav class="navbar navbar-light bg-info">
+            <a class="navbar-brand" id="home" href="index.html">Home</a>
+            <img src="logo.png" class="center" height=100px width=150px>
+            <a class="navbar-brand" id="stats" href="#">Stats</a>
+        </nav>
+
+        <!-- Main/home page section -->
+        <div class="jumbotron" id="main-page">
+            <p class="lead pt-3 pb-1 font-weight-bold"> Your ally to know where to go and what to talk about! </p>
+            <p class="lead pt-0 pb-4 font-weight-bold">Select an occasion to get started!</p>
+
 
             <!--Side nav-->
-                <div class="row">
+            <div class="row">
                 <div class="col-md-3">
+                    <span class="text-occasion pb-5 pl-4 mt-1">Select the Occasion</span>
+
                     <button id="business" class="btn btn-to-get-form">
                         <i class="fas fa-user-tie"></i><span class="text-business pl-4 mt-1">Business</span>
                     </button>
@@ -36,56 +47,62 @@
                     </button>
                 </div>
 
-            <!--Hidden section tag goes here-->
-                    <div class="col-md-9 text-align-center" id="input-form">
+                <!--Hidden section tag goes here-->
+                <div class="col-md-9 text-align-center" id="input-form">
 
-                    </div>
-                    <!--<section id="appendHere" style="float:right; color: blue;"></section>-->
                 </div>
-        </div>
-    <div id="results" style="display:none;">
-        <div class="container info">
-
-            <!---container for food and news--->
-            <div class="row">
-                <div class="col-md-3 results mt-2 mb-4 ml-4 mr-1" >
-                    <h5 id="heading-food">Food and Drinks</h5>
-                    <div id="food"></div>
-                </div>
-
-                <div class="col-md-3 results mt-2 mb-4" >
-                    <h5 id="movies-People">Movies/TV-shows/People</h5>
-                    <div id="movies"></div>
-                </div>
-                <div class="col-md-3 results mt-2 mb-4 ml-1 mr-4" >
-                    <h5 id="heading-news">News</h5>
-                    <div id="news"></div>
-                </div>
-
             </div>
         </div>
+
+        <!-- API results section -->
+        <div id="results" style="display:none;">
+            <div class="container info">
+
+                <!---container for food and news--->
+                <div class="row">
+                    <div class="col-md-3 results mt-2 mb-4 ml-4 mr-1">
+                        <h1 id="heading-food">Food and Drinks</h1>
+                        <div id="food"></div>
+                    </div>
+
+                    <div class="col-md-3 results mt-2 mb-4">
+                        <h1 id="movies-People">Movies/TV-shows/People</h1>
+                        <div id="movies"></div>
+                    </div>
+                    
+                    <div class="col-md-3 results mt-2 mb-4 ml-1 mr-4">
+                        <h1 id="heading-news">News</h1>
+                        <h4>Top Stories</h4>
+                        <div id="news"></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!--container-Footer-->
+        <div class="footer bg-info">
+            <p class="copyright" id="">Copyright.</p>
+        </div>
     </div>
-    <!--container-Footer-->
-    <div class="footer bg-info">
-            <p class="copyright">Copyright.</p>
-    </div>
-</div>
-<!-- link to Firebase -->
-<script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js"></script>
-<!-- link to Bootstrap JavaScript/jQuery -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    <!-- link to Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js"></script>
+    <!-- link to Bootstrap JavaScript/jQuery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
         crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
-<!-- link to our JavaScript/jQuery -->
+    <!-- link to our JavaScript/jQuery -->
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- <script src="assets/javascript/app.js"></script> -->
+    <script src="app.js"></script>
 </body>
 
-<script src="assets/javascript/app.js"></script>
+
 </html>
