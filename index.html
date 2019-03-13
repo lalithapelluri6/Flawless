@@ -12,7 +12,7 @@
     <link
         href="https://fonts.googleapis.com/css?family=Bangers|Cardo|Courgette|Domine|Hammersmith+One|Kalam|Neuton|Paytone+One|Quattrocento|Satisfy|Suranna"
         rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="assets/css/style.css">
     <!-- Font Awesome Icon Library -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
@@ -21,7 +21,7 @@
     <div class="container-fluid">
         <nav class="navbar navbar-light bg-info">
             <a class="navbar-brand" id="home" href="index.html">Home</a>
-            <img src="logo.png" class="center" height=100px width=150px>
+            <img src="assets/images/logo.png" class="center" height=100px width=150px>
             <a class="navbar-brand" id="stats" href="#">Stats</a>
         </nav>
 
@@ -60,25 +60,31 @@
 
                 <!---container for food and news--->
                 <div class="row">
-                    <div class="col-md-3 results mt-2 mb-4 ml-4 mr-1">
-                        <h1 id="heading-food">Food and Drinks</h1>
+                    <div class="col-md-3 col-sm-8 col-xs-12 results mt-2 mb-4 ml-5 mr-3" >
+                        <h5 id="heading-food">Food and Drinks</h5>
                         <div id="food"></div>
                     </div>
 
-                    <div class="col-md-3 results mt-2 mb-4">
-                        <h1 id="movies-People">Movies/TV-shows/People</h1>
+                    <div class="col-md-4 col-sm-8 col-xs-12 results mt-2 mb-4" >
+                        <h5 id="movies-People">Movies/TV-shows/People</h5>
                         <div id="movies"></div>
                     </div>
-                    
-                    <div class="col-md-3 results mt-2 mb-4 ml-1 mr-4">
-                        <h1 id="heading-news">News</h1>
-                        <h4>Top Stories</h4>
+                    <div class="col-md-3 col-sm-8 col-xs-12 results mt-2 mb-4 ml-3 mr-3" >
+                        <h5 id="heading-news">News</h5>
                         <div id="news"></div>
                     </div>
 
                 </div>
+                <div class="row">
+                    <button id="btn" class="btn btn-success float-right">Back</button>
+                </div>
             </div>
         </div>
+        <!--This will show the chart for stats-->
+        <div class="container-fluid w-75 h-50 float-left">
+            <canvas id="myChart" width=400 height=200></canvas>
+        </div>
+
         <!--container-Footer-->
         <div class="footer bg-info">
             <p class="copyright" id="">Copyright.</p>
@@ -101,7 +107,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
     <!-- <script src="assets/javascript/app.js"></script> -->
-    <script src="app.js"></script>
+    <script src="assets/javascript/app.js"></script>
+
+    <!--links for database and chart display-->
+    <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-database.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
+    <!--This will link to firebase chart-->
+    <script src="assets/javascript/chart.js"></script>
 </body>
 
 
