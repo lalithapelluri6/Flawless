@@ -78,10 +78,10 @@ function saveToFirebase() {
 
   // create a temporary object 
   var newSearchStored = {
-    location: location,
-    foodAndDrinks: foodAndDrinks,
-    moviesUpdate: moviesUpdate,
-    newsUpdate: newsUpdate
+    location: location.toUpperCase(),
+    foodAndDrinks: foodAndDrinks.toUpperCase(),
+    moviesUpdate: moviesUpdate.toUpperCase(),
+    newsUpdate: newsUpdate.toUpperCase()
   };
 
   // push this temporary object into firebase for storage
@@ -149,7 +149,7 @@ function yelpFusionAPI(place, foodDrinks) {
   });
 }
 
-//Fancy Display of Ratings for the YELP Reviews 
+// funtion to get the fancy display of ratings for the YELP Reviews - the lgreat little stars
 function displayStarIconRating(rating) {
 
   console.log(parseInt(rating));
