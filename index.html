@@ -2,71 +2,94 @@
 <html lang="en-us">
 
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
+    <meta charset="UTF-8">
+    <title>Flawless</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-    <!-- for icons -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
         integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-    <!-- for the font -->
     <link href="https://fonts.googleapis.com/css?family=Exo" rel="stylesheet">
-    <!-- our css file -->
-    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
-    <title>Flawless</title>
+    <link
+        href="https://fonts.googleapis.com/css?family=Bangers|Cardo|Courgette|Domine|Hammersmith+One|Kalam|Neuton|Paytone+One|Quattrocento|Satisfy|Suranna"
+        rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <!-- Font Awesome Icon Library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
-<div class="container">
-    <nav class="navbar navbar-light bg-info">
-        <a class="navbar-brand">Logo</a>
-        <h1 id="heading-one">Flawless</h1>
-        <ul class="navbar-nav">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-            </li>
-        </ul>
-    </nav>
-    <div>
-        <div class="container info">
-            <p class="lead"> We think that the main fear about meeting new people is this uncomfortable and stressing silence/blank
-                because one doesn’t know what to talk about or what to say to keep the conversation going.Our app aims addresses the
-                problem by helping people get ready for their date, professional, and/or social outings!</p>
+    <div class="container-fluid">
+        <nav class="navbar navbar-light bg-info">
+            <a class="navbar-brand" id="home" href="index.html">Home</a>
+            <img src="assets/images/logo.png" class="center" height=100px width=150px>
+            <a class="navbar-brand" id="stats" href="#">Stats</a>
+        </nav>
+
+        <!-- Main/home page section -->
+        <div class="jumbotron" id="main-page">
+            <p class="lead pt-3 pb-1 font-weight-bold"> Your ally to know where to go and what to talk about! </p>
+            <p class="lead pt-0 pb-4 font-weight-bold">Select an occasion to get started!</p>
+
 
             <!--Side nav-->
-            <div class="information">
-                <div class="aside ml-5">
-                    <div id="business" class="btn btn-to-get-form">
-                        <i class="fas fa-user-tie"></i><span class="text-business">Business</span>
-                    </div>
-                    <div id="social" class="btn btn-to-get-form">
-                        <i class="fas fa-glass-cheers"></i><span class="text-social">Social</span>
-                    </div>
-                    <div id="date" class="btn btn-to-get-form">
-                        <i class="fas fa-heart pb-5"></i><span class="text-date pb-5">Date</span>
-                    </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <span class="text-occasion pb-5 pl-4 mt-1">Select the Occasion</span>
+
+                    <button id="business" class="btn btn-to-get-form">
+                        <i class="fas fa-user-tie"></i><span class="text-business pl-4 mt-1">Business</span>
+                    </button>
+                    <button id="social" class="btn btn-to-get-form">
+                        <i class="fas fa-glass-cheers"></i><span class="text-social pl-3 mt-1">Social</span>
+                    </button>
+                    <button id="date" class="btn btn-to-get-form">
+                        <i class="fas fa-heart"></i><span class="text-date pb-5 pl-4 mt-1">Date</span>
+                    </button>
+                </div>
+
+                <!--Hidden section tag goes here-->
+                <div class="col-md-9 text-align-center" id="input-form">
+
                 </div>
             </div>
-            <!--Hidden section tag goes here-->
-            <div id="input-form" class="float-top w-60">
+        </div>
 
+        <!-- API results section -->
+        <div id="results" style="display:none;">
+            <div class="container info">
+
+                <!---container for food and news--->
+                <div class="row">
+                    <div class="col-md-3 col-sm-8 col-xs-12 results mt-2 mb-4 ml-5 mr-3" >
+                        <h5 id="heading-food">Food and Drinks</h5>
+                        <div id="food"></div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-8 col-xs-12 results mt-2 mb-4" >
+                        <h5 id="movies-People">Movies/TV-shows/People</h5>
+                        <div id="movies"></div>
+                    </div>
+                    <div class="col-md-3 col-sm-8 col-xs-12 results mt-2 mb-4 ml-3 mr-3" >
+                        <h5 id="heading-news">News</h5>
+                        <div id="news"></div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <button id="btn" class="btn btn-success float-right">Back</button>
+                </div>
             </div>
         </div>
+        <!--This will show the chart for stats-->
+        <div class="container-fluid w-75 h-50 float-left">
+            <canvas id="myChart" width=400 height=200></canvas>
+        </div>
 
-        <section id="appendHere" style="float:right; color: blue; ></section>
-    </div>
-    <!--container-Footer-->
-    <div class="footer bg-info">
-        <div class="container">
-            <p class="copyright">Copyright.</p>
+        <!--container-Footer-->
+        <div class="footer bg-info">
+            <p class="copyright" id="">Copyright.</p>
         </div>
     </div>
-         
-    
     <!-- link to Firebase -->
     <script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js"></script>
     <!-- link to Bootstrap JavaScript/jQuery -->
@@ -79,10 +102,20 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
-    <!-- AJAX Jquery  -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <!-- link to our JavaScript/jQuery -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- <script src="assets/javascript/app.js"></script> -->
     <script src="assets/javascript/app.js"></script>
+
+    <!--links for database and chart display-->
+    <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-database.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
+    <!--This will link to firebase chart-->
+    <script src="assets/javascript/chart.js"></script>
 </body>
+
 
 </html>
