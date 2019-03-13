@@ -19,7 +19,6 @@ firebase.initializeApp(config);
 
 var database = firebase.database();
 
-
 // ------------------------------------------------------
 // Functions
 //--------------------------------------------------------
@@ -104,7 +103,7 @@ function yelpFusionAPI(place, foodDrinks) {
 
   // Generating the API query url for the YELP Fusion API, by passing the location to it
   //  and refining the search with foodDrinks if the user entered the kind of cuisine wanted
-  var queryURL = "https://api.yelp.com/v3/businesses/search?term=" + foodDrinks + "&limit=20&sort_by=rating&location=" + place
+  var queryURL = "https://api.yelp.com/v3/businesses/search?term=" + foodDrinks + "&limit=15&sort_by=rating&location=" + place
 
   // YELP API we need to pass Authorization (i. e. api key) as part of the header for the request to be authorized 
   // This api key is generated for the industry specifically catering to Food & Drinks from the Yelp Fushion  
@@ -129,12 +128,16 @@ function yelpFusionAPI(place, foodDrinks) {
       // append the name of the place
       newDiv.append("<h3 class='title'>" + response.businesses[i].name + "</h3>");
       // append the type of food
-      newDiv.append("<p>Category: " + response.businesses[i].categories[0].title + "</p>");
+      newDiv.append("<p class='category'>Category: " + response.businesses[i].categories[0].title + "</p>");
       // append the price category and number of reviews
+      if (!response.businesses[i].price) {
+        response.businesses[i].price = "$"; 
+      }
       newDiv.append("<p>Price: " + response.businesses[i].price + " Reviews: " + response.businesses[i].review_count + "</p>");
       // append the rating
       newDiv.append("<p>Rating: " + response.businesses[i].rating + displayStarIconRating(response.businesses[i].rating) + " </p>");
-
+      //append address 
+      newDiv.append("<p class='address'>"+ response.businesses[i].location.address1 + ', ' + response.businesses[i].location.city + ' ' + response.businesses[i].location.zip_code + "</p>"); 
       // append the link to the yelp restautant page
       newDiv.append("<a href=" + response.businesses[i].url + " target='_blank'> Yelp Business Link </a>")
       // add a line to separate the different results
@@ -208,8 +211,8 @@ function newsAPI(newsText) {
   }).then(function (response) {
     console.log("queryURL: " + queryURL);
     console.log(response);
-    // for every one of the results received
-    for (var i = 0; i < response.articles.length; i++) {
+    // for every one of the results received [response.articles.length] instead picking only top 10 records 
+    for (var i = 0; i < 10; i++) {
       // create a new div to store the results
       var newDiv = $("<div>");
       // console.log(response.articles[i].name); 
@@ -217,6 +220,9 @@ function newsAPI(newsText) {
       // append the title of the article
       newDiv.append("<h3 class='title'>" + response.articles[i].title + "</h3>");
       // append the name of the author(s) of the article
+      if (!response.articles[i].author) {
+        response.articles[i].author = "Anonymus"
+      }
       newDiv.append("<p class='author'>Author(s): " + response.articles[i].author + "</p>");
       // append an overview of the article
       newDiv.append("<p class='desc'>Overview: " + response.articles[i].content + "</p>");
@@ -264,12 +270,12 @@ function movieTvShowsAPI(movieOrTVShow) {
       // if the media is "tv"
       if (response.results[i].media_type === "tv") {
         // append the title of the result using "name"
-        newDiv.append("<h3 class='title'> Title: " + response.results[i].name + "</h3>");
+        newDiv.append("<h3 class='title'>" + response.results[i].name + "</h3>");
       }
       // if the media is "movie"
       else {
         // append the title of the result using "title"
-        newDiv.append("<h3 class='title'> Title: " + response.results[i].title + "</h3>");
+        newDiv.append("<h3 class='title'>" + response.results[i].title + "</h3>");
       }
       // append the media type: "tv" or "movie"
       newDiv.append("<p class='author'>Media Type: " + response.results[i].media_type + "</p>");
