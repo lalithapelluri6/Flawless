@@ -23,9 +23,10 @@ var database = firebase.database();
 // ------------------------------------------------------
 // Functions
 //--------------------------------------------------------
+
 // function to display the input form
 function invokeInputForm() {
-  // clear the div from previous info
+  // clear the div of previous info
   $("#input-form").empty();
 
   // Create the Form within a container
@@ -34,22 +35,22 @@ function invokeInputForm() {
 
   // Input field for Search location by Zipcode or City
   var locationFormDiv = $("<div>").addClass("form-group");
-  locationFormDiv.append("<label for='location'> Search by location: </label>");
+  locationFormDiv.append("<label for='location'>Search by location - Enter a city or zipcode</label>");
   locationFormDiv.append("<input type='text' id='location' class='form-control'>");
 
-  // Input field for Restaurants and other places to meet
+  // Input field for Restaurants, cafe, pub, bars...
   var foodFormDiv = $("<div>").addClass("form-group");
-  foodFormDiv.append("<label for='foodAndDrinks'> What Cuisine : </label>");
-  foodFormDiv.append("<input type='text' id='foodAndDrinks' placeholder='Eg Asian, American, French, Italian, Indian' class='form-control'>");
+  foodFormDiv.append("<label for='foodAndDrinks'>What kind of food are you interested in?</label>");
+  foodFormDiv.append("<input type='text' id='foodAndDrinks' placeholder='Eg Asian, American, French, Italian, Indian...' class='form-control'>");
 
-  // Input field for news if want latest news 
+  // Input field to get list of movies or TV show according to the keyword entered 
   var moviesFormDiv = $("<div>").addClass("form-group");
-  moviesFormDiv.append("<label for='moviesUpdate'> Entertainment updates : </label>");
-  moviesFormDiv.append("<input type='text' id='moviesUpdate' placeholder='Eg Name of Movie or TV Shows' class='form-control'>");
+  moviesFormDiv.append("<label for='moviesUpdate'>Search for Movies or TV shows - Enter a keyword</label>");
+  moviesFormDiv.append("<input type='text' id='moviesUpdate' placeholder='Eg Space, Rocky, Nature, Love...' class='form-control'>");
 
-  // Input field for movies or TV Shows if wants info 
+  // Input field to get list of movies or TV show according to the keyword entered  
   var newsFormDiv = $("<div>").addClass("form-group");
-  newsFormDiv.append("<label for='newsUpdate'> News updates : </label>");
+  newsFormDiv.append("<label for='newsUpdate'> Search for news updates - Enter a keyword</label>");
   newsFormDiv.append("<input type='text' id='newsUpdate' placeholder='Eg Industry, Travel, Movie , Sports, Science' class='form-control'>");
 
   // append those input fields to the input form
@@ -61,7 +62,7 @@ function invokeInputForm() {
 
   // append the input form and the button to the container div created above
   containerDiv.append(inputForm, submitButton, clearButton);
-  // append the input fields and button to the HTML section with ID = input-form
+  // append the input fields and button to the HTML element with ID = input-form
   $("#input-form").append(containerDiv); 
 
 }
@@ -69,7 +70,7 @@ function invokeInputForm() {
 // function to save the user input into the firebase
 function saveToFirebase() {
 
-  // store the value entered in form into variables
+  // store the value entered in the form into variables
   var location = $("#location").val().trim();
   var foodAndDrinks = $("#foodAndDrinks").val().trim();
   var moviesUpdate = $("#moviesUpdate").val().trim();
@@ -85,13 +86,12 @@ function saveToFirebase() {
 
   // push this temporary object into firebase for storage
   database.ref().push(newSearchStored);
-
 }
 
 // function to call the YELP Fusion API
 function yelpFusionAPI(place, foodDrinks) {
 
-  //Clear Results Div  before showing the data 
+  // clear the div before showing new results
   $("#appendHere").empty(); 
 
   // Some APIs will give us a cross-origin (CORS) error. This small function is a fix for that error. You can also check out the chrome extenstion (https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi?hl=en).
@@ -101,11 +101,12 @@ function yelpFusionAPI(place, foodDrinks) {
     }
   });
 
-  // Generating the API query url with by passing the location to it & the term here works in for categories the we like to search Ex: Cuisine or Bars 
+  // Generating the API query url for the YELP Fusion API, by passing the location to it
+  //  and refining the search with foodDrinks if the user entered the kind of cuisine wanted
   var queryURL = "https://api.yelp.com/v3/businesses/search?term="+ foodDrinks + "&limit=20&sort_by=rating&location=" +  place  
 
-  //YELP API we need to pass Authorization as a part of the header for the link to work 
-  //This api key is generated for the industry specifically catering to Food& Drinks from the Yelp Fushion  
+  // YELP API we need to pass Authorization (i. e. api key) as part of the header for the request to be authorized 
+  // This api key is generated for the industry specifically catering to Food & Drinks from the Yelp Fushion  
   $.ajax({
       url: queryURL,
       method: "GET",
@@ -114,35 +115,39 @@ function yelpFusionAPI(place, foodDrinks) {
           Authorization: "Bearer 6pKp-wZ6h5uoiUqasnagzsVJuleZkEyFSWPJhzSyyiSj8Ha__4PCt_15sDAEufe1_7x0-aCz_tfxz96hkRdPxL6GtP5QyOzJ9A1yOlRiVSORiFstD9P1MT0J6m6EXHYx",
       }
   }).then(function(response) {
-      console.log("queryURL" + queryURL); 
+      console.log("queryURL: " + queryURL); 
       console.log(response);
-
+      // for every one of the results received
       for ( var i =0; i < response.businesses.length ; i++){
+        // create a new div to store the results
         var newDiv = $("<div>"); 
         // console.log("State: " + response.businesses[i].location.state); 
         // console.log("Category :" + response.businesses[i].categories[0].title); 
         // console.log("Name : "  + response.businesses[i].name); 
 
+        // append the name of the place
         newDiv.append("<h3 class='title'>"+ response.businesses[i].name + "</h3>"); 
-        newDiv.append("<p> Category : "+ response.businesses[i].categories[0].title + "</p>"); 
-        
-        newDiv.append("<p> Price : "+ response.businesses[i].price  + " Reviews: " + response.businesses[i].review_count + "</p>");
-        newDiv.append("<p>  Ratings: " + response.businesses[i].rating +"</p>"); 
+        // append the type of food
+        newDiv.append("<p>Category: "+ response.businesses[i].categories[0].title + "</p>"); 
+        // append the price category and number of reviews
+        newDiv.append("<p>Price: "+ response.businesses[i].price  + " Reviews: " + response.businesses[i].review_count + "</p>");
+        // append the rating
+        newDiv.append("<p>Rating: " + response.businesses[i].rating +"</p>");
+        // append the link to the yelp restautant page
         newDiv.append("<a href="+ response.businesses[i].url + " target='_blank'> Yelp Business Link </a>")
+        // add a line to separate the different results
+        newDiv.append("<hr>"); 
         
-        newDiv.append("<hr />"); 
-        newDiv.append("</div>"); 
-        
-        // By now, you should have been able to render all of the resturants to the foods & drinks div.
+        // display all of the results for every restaurant to the foods & drinks div.
         $("#appendHere").append(newDiv); 
       }
   });
 }
 
-// function to call the News API depending on the category selected 
-function NewsAPI(newsText) {
+// function to call the News API depending on the keyword entered by the user 
+function newsAPI(newsText) {
 
-  //Clear Results Div  before showing the data 
+  // clear the div before showing new results
   $("#appendHere").empty(); 
 
   // Some APIs will give us a cross-origin (CORS) error. This small function is a fix for that error. You can also check out the chrome extenstion (https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi?hl=en).
@@ -152,43 +157,44 @@ function NewsAPI(newsText) {
     }
   });
 
-  // Generating the API query url with by passing the location to it 
+  // Generating the API query url the NEWS API by passing the keyword entered by the user - only english articles returned, sorted by popularity
   var queryURL = "https://newsapi.org/v2/everything?q="+ newsText.split(' ').join('%20') +"&language=en&sortBy=relevancy&apiKey=80f6aa8df95a4c7ba514557d4f8f57fe" ; 
 
   $.ajax({
     url: queryURL, 
     method: "GET"
   }).then(function (response) {
-    
-      console.log(queryURL); 
-
+    console.log("queryURL: " + queryURL); 
     console.log(response); 
-
+    // for every one of the results received
     for ( var i =0; i < response.articles.length ; i++){
+      // create a new div to store the results
       var newDiv = $("<div>"); 
-      console.log(response.articles[i].name); 
+      // console.log(response.articles[i].name); 
 
+      // append the title of the article
       newDiv.append("<h3 class='title'>"+ response.articles[i].title+ "</h3>"); 
-      newDiv.append("<p class='author'> Author : "+ response.articles[i].author+ "</p>");
-      newDiv.append("<p class='desc'> Content : "+ response.articles[i].content+ "</p>");
-      newDiv.append("<p class='desc'> Source : "+ response.articles[i].source.name+ "</p>");
+      // append the name of the author(s) of the article
+      newDiv.append("<p class='author'>Author(s): "+ response.articles[i].author+ "</p>");
+      // append an overview of the article
+      newDiv.append("<p class='desc'>Overview: "+ response.articles[i].content+ "</p>");
+      // append the source of the article
+      newDiv.append("<p class='desc'>Source: "+ response.articles[i].source.name+ "</p>");
+      // append a link to the article
       newDiv.append("<a href=" + response.articles[i].url+ " target='_blank' > Article Link </a>");
-      newDiv.append("<hr />"); 
-      newDiv.append("</div>"); 
+      // add a line to separate the different results
+      newDiv.append("<hr>"); 
         
-      
-        // Step 6. By now, you should have been able to render all of the articles to the news div.
-        $("#appendHere").append(newDiv); 
+      // display all of the results for every article to the news div.
+      $("#appendHere").append(newDiv); 
     }
-    
-  });
-  
+  }); 
 }
 
-// function to call the Movie and  TV shows API depending on the category selected 
+// function to call the Movie and TV shows API depending on the keyword entered by the user
 function movieTvShowsAPI(movieOrTVShow) {
 
-  //Clear Results Div  before showing the data 
+  // clear the div before showing new results
   $("#appendHere").empty(); 
 
   // Some APIs will give us a cross-origin (CORS) error. This small function is a fix for that error. You can also check out the chrome extenstion (https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi?hl=en).
@@ -198,48 +204,54 @@ function movieTvShowsAPI(movieOrTVShow) {
     }
   });
 
-  // Generating the API query url with by passing the location to it 
-
+  // Generating the API query url for the Movie DB API by passing the keyword entered by the user - movie/tv show in American english only and family friendly!
   var  queryURL = "https://api.themoviedb.org/3/search/multi?api_key=498b69881c75c1037a70315572cae878&language=en-US&query="+ movieOrTVShow + "&page=1&include_adult=false"; 
+  
   $.ajax({
     url: queryURL, 
     method: "GET"
   }).then(function (response) {
-    
-      console.log(queryURL); 
-
+    console.log("queryURL: " + queryURL); 
     console.log(response); 
-
+    // for every one of the results received
     for ( var i =0; i < response.results.length ; i++){
+      // create a new div to store the results
       var newDiv = $("<div>"); 
 
+      // condition depending on the type of media because the title is stored differently depending on the media
+      // if the media is "tv"
       if (response.results[i].media_type === "tv") {
-        newDiv.append("<h3 class='title'> Title : "+ response.results[i].name+ "</h3>");
+        // append the title of the result using "name"
+        newDiv.append("<h3 class='title'> Title: "+ response.results[i].name+ "</h3>");
       }
+      // if the media is "movie"
       else { 
-        newDiv.append("<h3 class='title'> Title : "+ response.results[i].title+ "</h3>");
+        // append the title of the result using "title"
+        newDiv.append("<h3 class='title'> Title: "+ response.results[i].title+ "</h3>");
       }
-
-      newDiv.append("<p class='author'> Media Type : "+ response.results[i].media_type+ "</p>");
-      newDiv.append("<p class='desc'> Popularity : "+ response.results[i].popularity+ "</p>");
-      var posterImg = $("<img alt= 'Poster Image' class='img-fluid img-thumbnail'>").attr("src", "http://image.tmdb.org/t/p/w185/" + response.results[i].poster_path); 
-      newDiv.append(posterImg); 
-      newDiv.append("<br/> <p class='desc'> Overview : " + response.results[i].overview + "</p>");
-      newDiv.append("<hr />"); 
-      newDiv.append("</div>"); 
+      // append the media type: "tv" or "movie"
+      newDiv.append("<p class='author'>Media Type: "+ response.results[i].media_type+ "</p>");
+      // append the popularity
+      newDiv.append("<p class='desc'>Popularity: "+ response.results[i].popularity+ "</p>");
+      // append the poster of the movie/tv show
+      newDiv.append("<img alt='Poster Image' src='http://image.tmdb.org/t/p/w185/" + response.results[i].poster_path + "' class='img-fluid img-thumbnail'>"); 
+      // var posterImg = $("<img alt= 'Poster Image' class='img-fluid img-thumbnail'>").attr("src", "http://image.tmdb.org/t/p/w185/" + response.results[i].poster_path); 
+      // newDiv.append(posterImg);
+      // append the overview of the movie/tv show
+      newDiv.append("<br/> <p class='desc'>Overview: " + response.results[i].overview + "</p>");
+      // add a line to separate the different results
+      newDiv.append("<hr>");
         
-      
-        // Step 6. By now, you should have been able to render all of the articles to the news div.
-        $("#appendHere").append(newDiv); 
+      // display all of the results for every movie/tv show to the movies-tvshow div.
+      $("#appendHere").append(newDiv); 
     }
-    
   });
-  
 }
 
 
-// ------------------------------------------------------------
+// ------------------------------------------------------
 // Main process
+//--------------------------------------------------------
 
 // get the HTML ready
 $(document).ready(function () {
@@ -250,54 +262,62 @@ $(document).ready(function () {
   // when the "clear" button has been clicked..
   $(document).on("click", "#btn-clear", function() {
 
+    
+
+    // clear the textbox areas
     $("#location").val("");
     $("#foodAndDrinks").val("");
     $("#moviesUpdate").val("");
     $("#newsUpdate").val("")
-    //Clear Results Div  before showing the data 
+    // clear the div before showing new results
     $("#appendHere").empty(); 
   })
 
   // when the "submit" button has been clicked...
-  $(document).on("click", "button[type=submit]", function (event) {
-    // prevent to the page to refresh
+  $(document).on("click", "#btn-submit", function (event) {
+    // prevent the page to refresh
     event.preventDefault();
 
     // save the user input to firebase 
     saveToFirebase();
 
     // do the AJAX calls
+    // store the user input into variables
     var place = $("#location").val().trim(); 
     var foodDrinks = $("#foodAndDrinks").val().trim(); 
     var movieOrTVShow = $("#moviesUpdate").val().trim(); 
     var newsText = $("#newsUpdate").val().trim(); 
-
-    //Nested Conditions to display API data based on the user input combinations 
+    // Nested Conditions to display API data based on what kind of info the user has entered
+    // if the user has entered a place
     if (place) {
-      //Show Food & drink recommendations 
+      // call the YELP Fusion API and show the food and drinks recommandations
+      // if there is data for foodDrinks, it will be used
       yelpFusionAPI(place, foodDrinks);
+      // if the user has also entered a keyword for movie/tv show
       if (movieOrTVShow) {
-        //Display data related to user input for TV /Movie / People
+        // call the MOVIE DB API and show the list of movies/tv show related to the keyword
         movieTvShowsAPI(movieOrTVShow);
-
+        // if the user has also entered a keyword for news update
         if (newsText) {
-          //Display NEWS related to user input for language - en-US 
-          NewsAPI(newsText);
+          // call the NEWS API and show the list of english articles related to the keyword
+          newsAPI(newsText);
         }
       }
     }
+    // if the user hasn't entered a location but has entered a keyword for movie/tv show
     else if (movieOrTVShow) {
-      //Display data related to user input for TV /Movie / People
+      // call the MOVIE DB API and show the list of movies/tv show related to the keyword
       movieTvShowsAPI(movieOrTVShow);
-
+      // if the user has also entered a keyword for news update
       if (newsText) {
-        //Display NEWS related to user input for language - en-US 
-        NewsAPI(newsText);
+        // call the NEWS API and show the list of english articles related to the keyword
+        newsAPI(newsText);
       }
     }
+    // if the user has only entered a keyword for news update
     else if (newsText) {
-      //Display NEWS related to user input for language - en-US 
-      NewsAPI(newsText);
+      // call the NEWS API and show the list of english articles related to the keyword 
+      newsAPI(newsText);
     }
   
   });
