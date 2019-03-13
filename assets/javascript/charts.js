@@ -1,13 +1,14 @@
 // Initialize Firebase
-var config = {
-    apiKey: "AIzaSyAetjyRx2t2a0mBfY0XwsSpH-2RclTWfeI",
-    authDomain: "flawless-7a98a.firebaseapp.com",
-    databaseURL: "https://flawless-7a98a.firebaseio.com",
-    projectId: "flawless-7a98a",
-    storageBucket: "flawless-7a98a.appspot.com",
-    messagingSenderId: "1096240112468"
-};
-firebase.initializeApp(config);
+// var config = {
+//     apiKey: "AIzaSyAetjyRx2t2a0mBfY0XwsSpH-2RclTWfeI",
+//     authDomain: "flawless-7a98a.firebaseapp.com",
+//     databaseURL: "https://flawless-7a98a.firebaseio.com",
+//     projectId: "flawless-7a98a",
+//     storageBucket: "flawless-7a98a.appspot.com",
+//     messagingSenderId: "1096240112468"
+// };
+
+// firebase.initializeApp(config);
 
 $(document).ready(function () {
 

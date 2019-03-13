@@ -83,6 +83,9 @@ home {
 
 body{
     background-image: url("../images/ice2.jpg");
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
 }
 
 .fas.fa-heart{
@@ -99,7 +102,12 @@ body{
 
 
 .container-fluid{
-    opacity: .85;
+  
+    opacity: 0.85;
+}
+/* This is for USer Stats chart  */
+#user-stats{
+    opacity: 1; 
 }
 
 .jumbotron{
@@ -122,7 +130,11 @@ button:hover{
       font-weight: bold;
       color: purple;  
   }
-/* Displyas the sub-title for all THe API DATA  */
+/* Displays the sub-title for all THe API DATA  */
   .author , .category {
       font-weight: bold; 
   }
+
+/* Firebase charts  */
+@import url('https://fonts.googleapis.com/css?family=Barlow:500');
+

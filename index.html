@@ -9,9 +9,9 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
         integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Exo" rel="stylesheet">
-    <link
-        href="https://fonts.googleapis.com/css?family=Bangers|Cardo|Courgette|Domine|Hammersmith+One|Kalam|Neuton|Paytone+One|Quattrocento|Satisfy|Suranna"
-        rel="stylesheet">
+    
+    <link href="https://fonts.googleapis.com/css?family=Bangers|Cardo|Courgette|Domine|Hammersmith+One|Kalam|Neuton|Paytone+One|Quattrocento|Satisfy|Suranna" rel="stylesheet">
+
     <link rel="stylesheet" href="assets/css/style.css">
     <!-- Font Awesome Icon Library -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -33,11 +33,12 @@
 
             <!--Side nav-->
             <div class="row">
-                <div class="col-md-3">
+
+                <div class="col-md-2">
                     <span class="text-occasion pb-5 pl-4 mt-1">Select the Occasion</span>
 
                     <button id="business" class="btn btn-to-get-form">
-                        <i class="fas fa-user-tie"></i><span class="text-business pl-4 mt-1">Business</span>
+                        <i class="fas fa-user-tie"></i><span class="text-business pl-3 mt-1">Business</span>
                     </button>
                     <button id="social" class="btn btn-to-get-form">
                         <i class="fas fa-glass-cheers"></i><span class="text-social pl-3 mt-1">Social</span>
@@ -48,74 +49,75 @@
                 </div>
 
                 <!--Hidden section tag goes here-->
-                <div class="col-md-9 text-align-center" id="input-form">
+                <div class="col-md-10 text-align-center" id="input-form">
 
                 </div>
             </div>
-        </div>
+            <!-- Closing main page  -->
+        </div> 
 
-        <!-- API results section -->
-        <div id="results" style="display:none;">
-            <div class="container info">
+            <!-- API results section -->
+            <div id="results" style="display:none;">
+                <div class="container-fluid mb-4">
 
-                <!---container for food and news--->
-                <div class="row">
-                    <div class="col-md-3 col-sm-8 col-xs-12 results mt-2 mb-4 ml-5 mr-3" >
-                        <h5 id="heading-food">Food and Drinks</h5>
-                        <div id="food"></div>
+                    <!-- container for results -->
+                    <div class="row">
+                        <!--results food and news -->
+                        <div class="col-md-3 col-sm-8 col-xs-12 results mt-2 mb-4 ml-5 mr-3">
+                            <h5 id="heading-food">Food and Drinks</h5>
+                            <div id="food"></div>
+                        </div>
+                        <!--results movies/tv shows -->
+                        <div class="col-md-4 col-sm-8 col-xs-12 results mt-2 mb-4">
+                            <h5 id="movies-People">Movies/TV-shows/People</h5>
+                            <div id="movies"></div>
+                        </div>
+                        <!--results for news -->
+                        <div class="col-md-3 col-sm-8 col-xs-12 results mt-2 ml-3 mr-3 mb-4">
+                            <h5 id="heading-news">News</h5>
+                            <div id="news"></div>
+                        </div>
+
                     </div>
 
-                    <div class="col-md-4 col-sm-8 col-xs-12 results mt-2 mb-4" >
-                        <h5 id="movies-People">Movies/TV-shows/People</h5>
-                        <div id="movies"></div>
-                    </div>
-                    <div class="col-md-3 col-sm-8 col-xs-12 results mt-2 mb-4 ml-3 mr-3" >
-                        <h5 id="heading-news">News</h5>
-                        <div id="news"></div>
-                    </div>
-
-                </div>
-                <div class="row">
-                    <button id="btn" class="btn btn-success float-right">Back</button>
                 </div>
             </div>
+            <br/> 
+            <!--This will show the chart for stats-->
+            <div class="container-fluid float-left bg-white" id="user-stats" style="display:block">
+                <canvas id="myChart"></canvas>
+            </div>
         </div>
-        <!--This will show the chart for stats-->
-        <div class="container-fluid w-75 h-50 float-left">
-            <canvas id="myChart" width=400 height=200></canvas>
-        </div>
-
+ 
         <!--container-Footer-->
-        <div class="footer bg-info">
-            <p class="copyright" id="">Copyright.</p>
+        <div class="footer bg-info fixed-bottom">
+            <p class="copyright">Copyright.</p>
         </div>
-    </div>
-    <!-- link to Firebase -->
-    <script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js"></script>
-    <!-- link to Bootstrap JavaScript/jQuery -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
-    <!-- link to our JavaScript/jQuery -->
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <!-- link to Firebase -->
+        <script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js"></script>
+        <!--links for database and chart display-->
+        <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-database.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
+        <script src="https://static.fusioncharts.com/code/latest/fusioncharts.js"></script>
 
-    <!-- <script src="assets/javascript/app.js"></script> -->
-    <script src="assets/javascript/app.js"></script>
-
-    <!--links for database and chart display-->
-    <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-database.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
-    <!--This will link to firebase chart-->
-    <script src="assets/javascript/chart.js"></script>
+        <!-- link to Bootstrap JavaScript/jQuery -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+        <!-- link to our JavaScript/jQuery -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <!-- <script src="assets/javascript/app.js"></script> -->
+        <script src="assets/javascript/app.js"></script>
+        <!--This will link to firebase chart-->
+        <script src="assets/javascript/charts.js"></script>
 </body>
-
 
 </html>
