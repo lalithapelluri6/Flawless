@@ -33,9 +33,6 @@ function invokeInputForm() {
   // Create the Form within a container
   var containerDiv = $("<div>").addClass("container float-left");
   var inputForm = $("<form>");
-  // add validation to the form
-  // inputForm.attr("novalidate","true").attr("data-toggle", "validator").attr("role", "form");
-  // inputForm.addClass("needs-validation");
 
   // Input field for Search location by Zipcode or City
   var locationFormDiv = $("<div>").addClass("form-group");
@@ -365,7 +362,7 @@ $(document).ready(function () {
       $("#validate-message").attr("style", "display:none");
 
       // save the user input to firebase 
-      // saveToFirebase();
+      saveToFirebase();
 
       // do the AJAX calls
       // Nested Conditions to display API data based on what kind of info the user has entered
