@@ -114,7 +114,7 @@ function yelpFusionAPI(place, foodDrinks) {
     method: "GET",
     dataType: "json",
     headers: {
-      Authorization: "Bearer 6pKp-wZ6h5uoiUqasnagzsVJuleZkEyFSWPJhzSyyiSj8Ha__4PCt_15sDAEufe1_7x0-aCz_tfxz96hkRdPxL6GtP5QyOzJ9A1yOlRiVSORiFstD9P1MT0J6m6EXHYx",
+      Authorization: "Bearer 4gaShlU1i7GPP5FmIPFkxn5ek_tbkSiCV52vDN_U2o7hAZDGpKwYIlMJ-JWq1HlwP75pAfZMKMcb8egT2YKZYwXGxpgTaj_D6F1U_Ef7nLAYoExhjGnMxir5xeuJXHYx",
     }
   }).then(function (response) {
     console.log("queryURL: " + queryURL);
