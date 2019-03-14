@@ -19,6 +19,7 @@ firebase.initializeApp(config);
 
 var database = firebase.database();
 
+
 // ------------------------------------------------------
 // Functions
 //--------------------------------------------------------
@@ -37,6 +38,7 @@ function invokeInputForm() {
   var locationFormDiv = $("<div>").addClass("form-group");
   locationFormDiv.append("<label for='location'>Search by location - Enter a city or zipcode</label>");
   locationFormDiv.append("<input type='text' id='location' class='form-control'>");
+  locationFormDiv.append("<small id='validate-message' class='text-danger' style='display:none'>Field required - Please enter a city or a zipcode</small>");
 
   // Input field for Restaurants, cafe, pub, bars...
   var foodFormDiv = $("<div>").addClass("form-group");
@@ -131,13 +133,13 @@ function yelpFusionAPI(place, foodDrinks) {
       newDiv.append("<p class='category'>Category: " + response.businesses[i].categories[0].title + "</p>");
       // append the price category and number of reviews
       if (!response.businesses[i].price) {
-        response.businesses[i].price = "$"; 
+        response.businesses[i].price = "$";
       }
       newDiv.append("<p>Price: " + response.businesses[i].price + " Reviews: " + response.businesses[i].review_count + "</p>");
       // append the rating
       newDiv.append("<p>Rating: " + response.businesses[i].rating + displayStarIconRating(response.businesses[i].rating) + " </p>");
       //append address 
-      newDiv.append("<p class='address'>"+ response.businesses[i].location.address1 + ', ' + response.businesses[i].location.city + ' ' + response.businesses[i].location.zip_code + "</p>"); 
+      newDiv.append("<p class='address'>" + response.businesses[i].location.address1 + ', ' + response.businesses[i].location.city + ' ' + response.businesses[i].location.zip_code + "</p>");
       // append the link to the yelp restautant page
       newDiv.append("<a href=" + response.businesses[i].url + " target='_blank'> Yelp Business Link </a>")
       // add a line to separate the different results
@@ -227,7 +229,7 @@ function newsAPI(newsText) {
       // append an overview of the article
       newDiv.append("<p class='desc'>Overview: " + response.articles[i].content + "</p>");
       // append the source of the article
-      newDiv.append("<p class='desc'>Source: " + response.articles[i].source.name + "</p>");
+      newDiv.append("<p class='desc'><span class='fas fa-newspaper'></span> Source: " + response.articles[i].source.name + "<span class='fas fa-newspaper'></span></p>");
       // append a link to the article
       newDiv.append("<a href=" + response.articles[i].url + " target='_blank' > Article Link </a>");
       // add a line to separate the different results
@@ -271,14 +273,17 @@ function movieTvShowsAPI(movieOrTVShow) {
       if (response.results[i].media_type === "tv") {
         // append the title of the result using "name"
         newDiv.append("<h3 class='title'>" + response.results[i].name + "</h3>");
+        // append the media type tv and add Tv icon
+        newDiv.append("<p class='author'><span class='fas fa-tv'></span> Media Type: " + response.results[i].media_type + "<span class='fas fa-tv'></span></p>");
       }
       // if the media is "movie"
       else {
         // append the title of the result using "title"
         newDiv.append("<h3 class='title'>" + response.results[i].title + "</h3>");
+        // append the media type movie and add the movie icon 
+        newDiv.append("<p class='author'><span class='fas fa-film'></span> Media Type: " + response.results[i].media_type + "<span class='fas fa-film'></span></p>");
       }
-      // append the media type: "tv" or "movie"
-      newDiv.append("<p class='author'>Media Type: " + response.results[i].media_type + "</p>");
+
       // append the popularity
       newDiv.append("<p class='desc'>Popularity: " + response.results[i].popularity + "</p>");
       // append the poster of the movie/tv show
@@ -309,6 +314,16 @@ $(document).ready(function () {
   $("#main-page").show();
   $("#results").hide();
 
+  // display the charts when "Stats" is clicked and main and results
+  $(document).on("click", "#stats", function () {
+    // hide main and results pages + hide input form
+    $("#input-form").hide();
+    $("#main-page").hide();
+    $("#results").hide();
+    // display the charts
+    $("#user-stats").attr("style", "display:block");
+  });
+
   // when the "clear" button has been clicked..
   $(document).on("click", "#btn-clear", function () {
 
@@ -317,6 +332,8 @@ $(document).ready(function () {
     $("#foodAndDrinks").val("");
     $("#moviesUpdate").val("");
     $("#newsUpdate").val("")
+    // clear the little "validation" message
+    $("#validate-message").attr("style", "display:none");
     // clear the div before showing new results
     $("#news").empty();
     $("#food").empty();
@@ -324,27 +341,49 @@ $(document).ready(function () {
   })
 
   // when the "submit" button has been clicked...
-  $(document).on("click", "#btn-submit", function (event) {
+  $(document).on("click", "button[type=submit]", function (event) {
     // prevent the page to refresh
     event.preventDefault();
 
-    // save the user input to firebase 
-    saveToFirebase();
-
-    // do the AJAX calls
     // store the user input into variables
     var place = $("#location").val().trim();
     var foodDrinks = $("#foodAndDrinks").val().trim();
     var movieOrTVShow = $("#moviesUpdate").val().trim();
     var newsText = $("#newsUpdate").val().trim();
-    // Nested Conditions to display API data based on what kind of info the user has entered
-    // if the user has entered a place
-    if (place) {
-      // call the YELP Fusion API and show the food and drinks recommandations
-      // if there is data for foodDrinks, it will be used
-      yelpFusionAPI(place, foodDrinks);
-      // if the user has also entered a keyword for movie/tv show
-      if (movieOrTVShow) {
+
+    // if-statement for validation for now because nothing else is working!
+    if (place === "" && !foodDrinks === "" || place === "") {
+
+      // display a message for the user
+      $("#validate-message").attr("style", "display:block");
+
+    } else {
+      // empty the "validate-message" div
+      $("#validate-message").attr("style", "display:none");
+
+      // save the user input to firebase 
+      saveToFirebase();
+
+      // do the AJAX calls
+      // Nested Conditions to display API data based on what kind of info the user has entered
+      // if the user has entered a place
+      if (place) {
+        // call the YELP Fusion API and show the food and drinks recommandations
+        // if there is data for foodDrinks, it will be used
+        yelpFusionAPI(place, foodDrinks);
+        // if the user has also entered a keyword for movie/tv show
+        if (movieOrTVShow) {
+          // call the MOVIE DB API and show the list of movies/tv show related to the keyword
+          movieTvShowsAPI(movieOrTVShow);
+          // if the user has also entered a keyword for news update
+          if (newsText) {
+            // call the NEWS API and show the list of english articles related to the keyword
+            newsAPI(newsText);
+          }
+        }
+      }
+      // if the user hasn't entered a location but has entered a keyword for movie/tv show
+      else if (movieOrTVShow) {
         // call the MOVIE DB API and show the list of movies/tv show related to the keyword
         movieTvShowsAPI(movieOrTVShow);
         // if the user has also entered a keyword for news update
@@ -353,30 +392,21 @@ $(document).ready(function () {
           newsAPI(newsText);
         }
       }
-    }
-    // if the user hasn't entered a location but has entered a keyword for movie/tv show
-    else if (movieOrTVShow) {
-      // call the MOVIE DB API and show the list of movies/tv show related to the keyword
-      movieTvShowsAPI(movieOrTVShow);
-      // if the user has also entered a keyword for news update
-      if (newsText) {
-        // call the NEWS API and show the list of english articles related to the keyword
+      // if the user has only entered a keyword for news update
+      else if (newsText) {
+        // call the NEWS API and show the list of english articles related to the keyword 
         newsAPI(newsText);
       }
+
+
+      //Hide the Input form section Inside show the results form 
+      $("#main-page").hide();
+      $("#results").show();
+
     }
-    // if the user has only entered a keyword for news update
-    else if (newsText) {
-      // call the NEWS API and show the list of english articles related to the keyword 
-      newsAPI(newsText);
-    }
-
-
-    //Hide the Input form section Inside show the results form 
-    $("#main-page").hide();
-    $("#results").show();
-
-
   });
 
 
 });
+
+
