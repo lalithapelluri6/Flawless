@@ -107,7 +107,7 @@ body{
 }
 /* This is for USer Stats chart  */
 #user-stats{
-    opacity: 1; 
+    opacity: 1;
 }
 
 .jumbotron{
@@ -123,17 +123,27 @@ button:hover{
 /* Displaying Stars for the Yelp Reviews  */
 .checked {
     color: orangered;
-  }
+}
 
-  /* Displyas the title for all THe API DATA  */
-  .title{
-      font-weight: bold;
-      color: purple;  
-  }
+/* Displyas the title for all THe API DATA  */
+.title{
+    font-weight: bold;
+    color: purple;  
+}
+
 /* Displays the sub-title for all THe API DATA  */
-  .author , .category {
-      font-weight: bold; 
-  }
+.author , .category {
+    font-weight: bold; 
+}
+
+  /* Displaying Stars for the Yelp Reviews  */
+.checked {
+    color: orangered;
+}
+/* Displaying diffrent colors for Awesome Icons on the Result page  */
+.fa-newspaper{  color: darkgreen ; }
+.fa-tv {  color: magenta  ; size: 3x;  }
+.fa-film  {  color: magenta; size: 3x; }
 
 /* Firebase charts  */
 @import url('https://fonts.googleapis.com/css?family=Barlow:500');
