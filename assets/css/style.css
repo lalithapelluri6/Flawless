@@ -2,13 +2,13 @@ home {
     float:right;
 }
 #business{
-    font-size:45px;
+    font-size:39px;
 }
 #social{
-    font-size: 45px;
+    font-size: 39px;
 }
 #date {
-    font-size: 45px;
+    font-size: 39px;
 }
 
 .text-occasion{
@@ -21,17 +21,17 @@ home {
 
 }
 .text-business {
-    font-size:30px;
+    font-size:26px;
     font-family: 'Cardo', serif;
     color:rgb(62, 62, 62);
 }
 .text-social {
-    font-size:30px;
+    font-size:26px;
     font-family: 'Cardo', serif;
     color: rgb(40, 40, 136);
 }
 .text-date {
-    font-size:30px;
+    font-size:26px;
     font-family: 'Cardo', serif;
     color: rgb(196, 19, 125);
 }
