@@ -352,8 +352,10 @@ $(document).ready(function () {
     var newsText = $("#newsUpdate").val().trim();
 
     // if-statement for validation for now because nothing else is working!
-    if (place === "" && !foodDrinks === "" || place === "") {
-
+    // if the user enters a "kinf of food", she/he has to enter a location
+    // and she/he can't submit an empty form, at least the location is required
+    // ideal: only one field, among location, movie/tv show or news would be required
+    if (!place && foodDrinks || !place && !movieOrTVShow && !newsText && !foodDrinks) {
       // display a message for the user
       $("#validate-message").attr("style", "display:block");
 
@@ -369,36 +371,48 @@ $(document).ready(function () {
       // if the user has entered a place
       if (place) {
         // call the YELP Fusion API and show the food and drinks recommandations
-        // if there is data for foodDrinks, it will be used
+        // if there is data for foodDrinks, it will be used and displayed
+        $("#food").attr("style", "display:block");
         yelpFusionAPI(place, foodDrinks);
-        // if the user has also entered a keyword for movie/tv show
-        if (movieOrTVShow) {
+        // if the user has also entered a keyword for movie/tv show and news update
+        if (movieOrTVShow && newsText) {
           // call the MOVIE DB API and show the list of movies/tv show related to the keyword
+          $("#movie").attr("style", "display:block");
           movieTvShowsAPI(movieOrTVShow);
-          // if the user has also entered a keyword for news update
-          if (newsText) {
+          // call the NEWS API and show the list of english articles related to the keyword
+          $("#news").attr("style", "display:block");
+          newsAPI(newsText);
+          // if the user has also entered a keyword for news update only
+        } else if (newsText) {
             // call the NEWS API and show the list of english articles related to the keyword
+            $("#news").attr("style", "display:block");
             newsAPI(newsText);
-          }
+        // if the user has also entered a keyword for movie/tv show only
+        } else if (movieOrTVShow) {
+          // call the MOVIE DB API and show the list of movies/tv show related to the keyword
+          $("#movie").attr("style", "display:block");
+          movieTvShowsAPI(movieOrTVShow);
         }
       }
       // if the user hasn't entered a location but has entered a keyword for movie/tv show
       else if (movieOrTVShow) {
         // call the MOVIE DB API and show the list of movies/tv show related to the keyword
+        $("#movie").attr("style", "display:block");
         movieTvShowsAPI(movieOrTVShow);
         // if the user has also entered a keyword for news update
         if (newsText) {
           // call the NEWS API and show the list of english articles related to the keyword
+          $("#news").attr("style", "display:block")
           newsAPI(newsText);
         }
       }
       // if the user has only entered a keyword for news update
       else if (newsText) {
-        // call the NEWS API and show the list of english articles related to the keyword 
-        newsAPI(newsText);
+          // call the NEWS API and show the list of english articles related to the keyword
+          $("#news").attr("style", "display:block")
+          newsAPI(newsText);
       }
-
-
+      
       //Hide the Input form section Inside show the results form 
       $("#main-page").hide();
       $("#results").show();
