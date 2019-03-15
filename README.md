@@ -27,8 +27,8 @@ By entering basic information on the occasion (business, social, or date) and th
 ### Deployed Site 
 <a href="https://lalithapelluri6.github.io/Flawless/">Flawless - Ice breaker</a>
 
-### Build Status: 
- <button style='background-color:green;color:white;'>build: success </button>
+#### Build Status: 
+ <button style="background-color:green;color:white;width:100px; height:30px;border-radius:25px;" > build: success </button>
 
 <hr /> 
 
@@ -48,11 +48,22 @@ By entering basic information on the occasion (business, social, or date) and th
     * TMDb API - returns TV shows/Movies/People in a single call based on search text entered. 
 
 ### Screenshots: 
+Home page 
+![Welcome Page](https://github.com/lalithapelluri6/Flawless/blob/master/Screenshots/Welcome.png?raw=true)
 
+Dynamic - User Input Page 
+![User Entry Page](https://github.com/lalithapelluri6/Flawless/blob/master/Screenshots/User-Input%20Form.png?raw=true)
+
+Dynamic - API Results Page 
+![User Entry Page](https://github.com/lalithapelluri6/Flawless/blob/master/Screenshots/API-Results-Page.png?raw=true)
+
+Dynamic - Charts JS Page 
+![Charts Page](https://github.com/lalithapelluri6/Flawless/blob/master/Screenshots/Charts.png?raw=true)
 
 ### Contributors : 
-    * Lalitha Pelluri - 
-    * Nick Tom - 
-    * Sophie Mallez - 
-    * Kanwar Batra - 
-    * Namita Shenai - 
+
+* Lalitha Pelluri - <a href="https://github.com/lalithapelluri6" > https://github.com/lalithapelluri6 </a>
+* Nick Tom - <a href="https://github.com/nicky2quicky"> https://github.com/nicky2quicky </a>
+* Sophie Mallez - <a href="https://github.com/SophM"> https://github.com/SophM </a>
+* Kanwar Batra -  <a href="https://github.com/kanwarb"> https://github.com/kanwarb </a>
+* Namita Shenai - <a href="https://github.com/NVK2016" > https://github.com/NVK2016 </a>
