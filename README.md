@@ -28,7 +28,7 @@ By entering basic information on the occasion (business, social, or date) and th
 <a href="https://lalithapelluri6.github.io/Flawless/">Flawless - Ice breaker</a>
 
 #### Build Status: 
- <button style="background-color:green;color:white;width:100px; height:30px;border-radius:25px;" > build: success </button>
+<button style="background-color:green;color:white;width:100px; height:30px;border-radius:25px;" > build: success </button>
 
 <hr /> 
 
